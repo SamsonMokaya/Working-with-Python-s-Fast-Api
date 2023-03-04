@@ -1,5 +1,3 @@
-from typing import List
-
 import uvicorn
 from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
@@ -34,6 +32,13 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 def get_users(db: Session = Depends(get_db)):
     return crud.get_all_users(db)
 
+@app.put("/user/{user_id}", response_model=schemas.UserInfo)
+def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_id(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_user = crud.update_user(db=db, user=user)
+    return db_user
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8081)

@@ -16,3 +16,10 @@ class UserInfo(UserInfoBase):
 
     class Config:
         orm_mode = True
+
+
+class UserUpdate(UserCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
