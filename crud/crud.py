@@ -1,6 +1,6 @@
 
 from sqlalchemy.orm import Session
-
+from fastapi import Depends, FastAPI, HTTPException
 from models import models
 from schemas import schemas
 
@@ -31,3 +31,11 @@ def update_user(db: Session, user: schemas.UserUpdate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def delete_user(db: Session, user_id:int):
+    user = db.query(models.UserInfo).filter(models.UserInfo.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted successfully"}

@@ -40,5 +40,11 @@ def update_user(user_id: int, user: schemas.UserUpdate, db: Session = Depends(ge
     db_user = crud.update_user(db=db, user=user)
     return db_user
 
+
+@app.delete("/user/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    return crud.delete_user(db=db, user_id=user_id)
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8081)
