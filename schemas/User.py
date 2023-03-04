@@ -4,22 +4,17 @@ from pydantic import BaseModel
 
 class UserInfoBase(BaseModel):
     username: str
-    fullname: str
+    email: str
 
 
 class UserCreate(UserInfoBase):
     password: str
 
 
-class UserInfo(UserInfoBase):
+class UserInfo(UserCreate):
     id: int
 
     class Config:
         orm_mode = True
 
 
-class UserUpdate(UserCreate):
-    id: int
-
-    class Config:
-        orm_mode = True
