@@ -27,8 +27,8 @@ def get_users(db: Session = Depends(get_db)):
     return crud.get_all_users(db)
 
 @app.get("/user/{email}")
-def get_user_by_email(email:str, db: Session = Depends(get_db)):
-    return crud.get_user_by_email(db=db, email=email)
+def get_user_by_email_password(email:str, password:str, db: Session = Depends(get_db)):
+    return crud.get_user_by_email(db=db, email=email, password=password)
 
 
 @app.post("/user", response_model=User.UserInfo)
@@ -37,6 +37,10 @@ def create_user(user: User.UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
     return crud.create_user(db=db, user=user)
+
+@app.post("/login", response_model=User.UserInfo)
+def login_user(user: User.UserCheck, db: Session = Depends(get_db)):
+    return crud.get_user_by_email_and_password(db, email=user.email, password=user.password)
 
 
 @app.put("/user/{user_id}", response_model=User.UserInfo)

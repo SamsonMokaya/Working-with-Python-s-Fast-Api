@@ -10,7 +10,9 @@ class UserInfoBase(BaseModel):
 class UserCreate(UserInfoBase):
     password: str
 
-
+class UserCheck(BaseModel):
+    email: str
+    password: str
 class UserInfo(UserCreate):
     id: int
 
