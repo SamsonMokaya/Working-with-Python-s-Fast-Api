@@ -7,6 +7,6 @@ Required dependancies:
   
 
 Api Endpoints:
-  ![image](https://user-images.githubusercontent.com/68181226/222884568-18d96512-bd0d-4741-85d2-9d203bd9340d.png)
+  ![image](https://user-images.githubusercontent.com/68181226/222978711-ab00be06-c292-4132-ad8a-da64c76b6520.png)
 
 
