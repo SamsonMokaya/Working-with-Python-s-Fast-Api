@@ -9,10 +9,9 @@ def get_user_by_username(db: Session, username: str):
 
 
 def get_user_by_email(db: Session, email: str):
-    user = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
-    if user:
-        return user
-    return HTTPException(status_code=404, detail="User not found")
+    return db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
+
+
 
 def get_user_by_email_and_password(db: Session, email: str, password: str):
     user = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
@@ -21,6 +20,15 @@ def get_user_by_email_and_password(db: Session, email: str, password: str):
     if not password == user.password:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect password")
     return user
+
+def get_user_by_email_and_username(db: Session, email: str, username: str):
+    user = db.query(models.UserInfo).filter(models.UserInfo.email == email).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Email not found")
+    if not username == user.password:
+        raise HTTPException(status_code=status.HTTP_404_UNAUTHORIZED, detail="Username not found")
+    return user
+
 
 def get_user_by_id(db: Session, user_id: int):
     return db.query(models.UserInfo).filter(models.UserInfo.id == user_id).first()
